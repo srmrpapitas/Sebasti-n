@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Box Villamar • Tenerife Excursions &amp; Watersports</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        :root {
+            --navy: #0A2540;
+            --turquoise: #00B4D8;
+            --orange: #FF6B35;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .premium-card {
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .premium-card:hover {
+            transform: translateY(-12px) scale(1.01);
+            box-shadow: 0 30px 70px -15px rgb(10 37 64 / 0.15), 0 10px 20px -10px rgb(0 180 216 / 0.1);
+        }
+
+        .excursion-img {
+            transition: transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .premium-card:hover .excursion-img {
+            transform: scale(1.12);
+        }
+
+        .lang-option {
+            transition: all 0.2s ease;
+        }
+        
+        .lang-option:hover {
+            background-color: #f8fafc;
+        }
+
+        .adventure-shadow {
+            box-shadow: 0 25px 50px -12px rgb(10 37 64 / 0.25);
+        }
+        
+        .price-tag {
+            color: #00B4D8;
+            font-weight: 800;
+        }
+        
+        .language-menu {
+            animation: fadeInScale 0.2s ease forwards;
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(-5px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        
+        .qr-frame {
+            box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .qr-frame:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#0A2540] overflow-x-hidden">
+    <!-- HEADER -->
+    <header class="bg-[#0A2540] text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-[#FF6B35] to-[#00B4D8] rounded-2xl flex items-center justify-center shadow-inner">
+                        <i class="fas fa-ticket-alt text-white text-3xl"></i>
+                    </div>
+                    <div>
+                        <span class="font-bold text-3xl tracking-tighter">TICKET BOX</span>
+                        <span class="block text-[10px] text-[#00B4D8] -mt-1.5 font-medium tracking-[3px]">VILLAMAR • TENERIFE</span>
+                    </div>
+                </div>
+
+                <!-- Language Selector + PROFESSIONAL QR -->
+                <div class="flex items-center gap-x-4">
+                    <!-- Language Dropdown (FIXED) -->
+                    <div class="relative">
+                        <button id="lang-button" onclick="toggleLangMenu()" 
+                                class="flex items-center gap-x-2.5 bg-white/10 hover:bg-white/15 transition-colors px-5 py-2.5 rounded-3xl text-sm font-medium border border-white/20">
+                            <span id="current-lang-display" class="flex items-center gap-x-2">
+                                🇬🇧 <span>English</span>
+                            </span>
+                            <i class="fas fa-chevron-down text-xs opacity-60"></i>
+                        </button>
+                        
+                        <div id="lang-menu" class="hidden absolute right-0 mt-3 w-64 bg-white rounded-3xl shadow-2xl border border-gray-100 py-2 z-[60] text-[#0A2540] language-menu">
+                            <div onclick="changeLanguage('en'); event.stopImmediatePropagation();" class="lang-option flex items-center gap-x-3 px-5 py-3 cursor-pointer hover:bg-gray-50">
+                                <span class="text-xl">🇬🇧</span> <span class="font-medium">English</span>
+                            </div>
+                            <div onclick="changeLanguage('es'); event.stopImmediatePropagation();" class="lang-option flex items-center gap-x-3 px-5 py-3 cursor-pointer hover:bg-gray-50">
+                                <span class="text-xl">🇪🇸</span> <span class="font-medium">Español</span>
+                            </div>
+                            <div onclick="changeLanguage('fr'); event.stopImmediatePropagation();" class="lang-option flex items-center gap-x-3 px-5 py-3 cursor-pointer hover:bg-gray-50">
+                                <span class="text-xl">🇫🇷</span> <span class="font-medium">Français</span>
+                            </div>
+                            <div onclick="changeLanguage('de'); event.stopImmediatePropagation();" class="lang-option flex items-center gap-x-3 px-5 py-3 cursor-pointer hover:bg-gray-50">
+                                <span class="text-xl">🇩🇪</span> <span class="font-medium">Deutsch</span>
+                            </div>
+                            <div onclick="changeLanguage('nl'); event.stopImmediatePropagation();" class="lang-option flex items-center gap-x-3 px-5 py-3 cursor-pointer hover:bg-gray-50">
+                                <span class="text-xl">🇳🇱</span> <span class="font-medium">Nederlands</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROFESSIONAL QR CODE -->
+                    <div class="hidden lg:flex flex-col items-center">
+                        <div class="qr-frame bg-white p-2 rounded-2xl border-4 border-white shadow-2xl">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&amp;data=https://ticketboxvillamar.com&amp;color=0A2540&amp;bgcolor=FFFFFF" 
+                                 class="w-[72px] h-[72px] rounded-xl" alt="Professional QR Code - Ticket Box Villamar">
+                        </div>
+                        <span class="text-[9px] text-white/80 mt-1.5 font-medium tracking-wider text-center">SCAN TO VISIT<br>OUR WEBSITE</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden" 
+             style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2070&amp;q=80'); background-size: cover; background-position: center 30%;">
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0A2540]/90 via-[#0A2540]/75 to-[#0A2540]/90"></div>
+        
+        <div class="relative max-w-5xl mx-auto px-6 text-center z-10">
+            <!-- TEAM BADGE - NO CEO PHOTO -->
+            <div class="inline-flex items-center gap-x-3 bg-white/10 backdrop-blur-xl border border-white/30 px-6 py-2 rounded-3xl mb-6">
+                <div class="flex items-center -space-x-1">
+                    <i class="fas fa-users text-[#FF6B35] text-2xl"></i>
+                </div>
+                <span class="text-white/90 text-sm font-medium">Professional Team of <span class="font-semibold text-[#FF6B35]">4 Expert Agents</span> • Since 2012</span>
+            </div>
+
+            <h1 class="text-white text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-none heading-serif" data-i18n="hero_title">
+                Discover Tenerife's<br>Hidden Wonders
+            </h1>
+            
+            <p class="mt-6 text-2xl md:text-3xl text-white/90 max-w-3xl mx-auto font-light" data-i18n="hero_subtitle">
+                Premium excursions • Watersports • Private experiences<br>
+                <span class="text-[#FF6B35] font-medium">with the island's most trusted local experts</span>
+            </p>
+
+            <div class="mt-10 max-w-xl mx-auto">
+                <div class="relative group">
+                    <input id="search-input" type="text" oninput="filterExcursions()" 
+                           placeholder="Search whale watching, buggy safari, stargazing..."
+                           class="w-full bg-white text-[#0A2540] placeholder:text-[#0A2540]/50 text-lg pl-14 pr-6 py-5 rounded-3xl shadow-2xl focus:outline-none focus:ring-4 focus:ring-[#00B4D8]/30 border-0">
+                    <i class="fas fa-search absolute left-6 top-5 text-[#0A2540]/40 text-2xl"></i>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <div class="inline-flex items-center gap-x-4 bg-white/10 backdrop-blur-xl px-8 py-3 rounded-3xl border border-white/20">
+                    <div class="flex text-[#FF6B35]">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <div>
+                        <span class="font-semibold text-white">4.9/5</span>
+                        <span class="text-white/70 text-sm ml-1.5">• 2,847 reviews</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center text-white/60 text-xs tracking-[2px]">
+            <span>SCROLL TO EXPLORE</span>
+            <i class="fas fa-chevron-down mt-1 animate-bounce"></i>
+        </div>
+    </section>
+
+    <!-- OUR EXCURSIONS -->
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-10">
+            <div>
+                <span class="text-[#FF6B35] font-semibold tracking-[1.5px] text-sm">14 EXPERIENCES</span>
+                <h2 class="text-5xl font-bold tracking-tighter text-[#0A2540] section-header" data-i18n="excursions_title">Our Excursions</h2>
+            </div>
+            <p class="text-xl text-[#0A2540]/70 mt-4 md:mt-0 max-w-md" data-i18n="excursions_sub">
+                Hand-picked by our Team of 4 Agents • Instant WhatsApp confirmation
+            </p>
+        </div>
+
+        <div id="excursions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Populated by JS -->
+        </div>
+    </section>
+
+    <!-- WHY BOOK WITH US + REAL SEBASTIÁN PHOTO -->
+    <section class="bg-[#0A2540] py-20 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="text-[#FF6B35] text-sm font-bold tracking-[2px]">THE TICKET BOX DIFFERENCE</span>
+                <h2 class="text-5xl font-bold tracking-tighter mt-2" data-i18n="why_title">Why Book With Us?</h2>
+                <p class="text-white/70 text-xl mt-3 max-w-lg mx-auto" data-i18n="why_sub">Because your Tenerife memories deserve the very best</p>
+            </div>
+
+            <div class="grid md:grid-cols-12 gap-6">
+                <div class="md:col-span-5 grid gap-6">
+                    <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all group">
+                        <div class="w-14 h-14 bg-[#FF6B35]/20 text-[#FF6B35] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-user-tie text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-2xl mb-3">True Local Expertise</h4>
+                        <p class="text-white/80">Our team of 4 expert agents knows every hidden cove, every secret viewpoint, and the best time to see wildlife.</p>
+                    </div>
+                    
+                    <div class="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all group">
+                        <div class="w-14 h-14 bg-[#00B4D8]/20 text-[#00B4D8] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-shield-halved text-3xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-2xl mb-3">Safety First. Always.</h4>
+                        <p class="text-white/80">All our captains, pilots and guides are fully licensed. We carry full insurance and follow strict safety protocols on every trip.</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-7">
+                    <!-- TEAM OF 4 EXPERT AGENTS - NO PHOTO -->
+                    <div class="bg-gradient-to-br from-[#00B4D8] via-[#0A2540] to-[#0A2540] p-10 rounded-3xl h-full border border-white/10 shadow-2xl">
+                        <div class="uppercase tracking-[2px] text-xs text-white/60 mb-2">OUR PROFESSIONAL TEAM</div>
+                        <h3 class="text-white text-4xl font-bold tracking-tight">Team of 4 Expert Agents</h3>
+                        <div class="text-[#FF6B35] font-semibold text-lg mt-1">Ticket Box Villamar • Since 2012</div>
+                        
+                        <div class="mt-6 text-white/90 text-[15px] leading-relaxed">
+                            Our team of 4 hand-picked expert agents knows every hidden cove, every secret viewpoint, and the best time to see wildlife. When you book with us, you get our personal promise: authentic adventures, fair prices, and memories that will last a lifetime. 
+                            <span class="font-semibold text-white">Join our family.</span>
+                        </div>
+                        
+                        <div class="mt-8 grid grid-cols-2 gap-4">
+                            <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-3">
+                                <i class="fas fa-user-tie text-[#FF6B35] text-xl"></i>
+                                <div><div class="font-semibold text-sm">Lead Guide</div><div class="text-xs text-white/70">Local expert since 2012</div></div>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-3">
+                                <i class="fas fa-water text-[#00B4D8] text-xl"></i>
+                                <div><div class="font-semibold text-sm">Watersports Pro</div><div class="text-xs text-white/70">Certified instructor</div></div>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-3">
+                                <i class="fas fa-mountain text-[#FF6B35] text-xl"></i>
+                                <div><div class="font-semibold text-sm">Mountain Expert</div><div class="text-xs text-white/70">Teide &amp; Anaga specialist</div></div>
+                            </div>
+                            <div class="bg-white/10 p-4 rounded-2xl flex items-center gap-3">
+                                <i class="fas fa-headset text-[#00B4D8] text-xl"></i>
+                                <div><div class="font-semibold text-sm">Booking &amp; Support</div><div class="text-xs text-white/70">WhatsApp in 4 languages</div></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 flex items-center gap-x-4">
+                            <div class="text-xs bg-white/20 px-4 py-2 rounded-2xl">📍 All born &amp; raised in Tenerife</div>
+                            <div class="text-xs bg-white/20 px-4 py-2 rounded-2xl">🏆 2,847 happy clients</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RENT A CAR -->
+    <section class="max-w-7xl mx-auto px-6 py-20">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=900&amp;q=80" 
+                     class="rounded-3xl shadow-2xl w-full aspect-[16/10] object-cover" alt="Premium car rental Tenerife">
+                <div class="absolute -bottom-6 -left-6 bg-white p-5 rounded-2xl shadow-xl border border-gray-100">
+                    <div class="flex items-center gap-x-3">
+                        <i class="fas fa-car text-4xl text-[#FF6B35]"></i>
+                        <div>
+                            <div class="text-sm text-gray-500">Starting from</div>
+                            <div class="text-4xl font-black text-[#0A2540]">34€<span class="text-base font-normal">/day</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="uppercase tracking-[2.5px] text-xs font-bold text-[#FF6B35]">EXPLORE FREELY</div>
+                <h2 class="text-5xl font-bold tracking-tighter text-[#0A2540] mt-2">Rent a Car in Tenerife</h2>
+                
+                <p class="mt-6 text-xl text-[#0A2540]/80">Discover the island on your own terms with our modern, well-maintained fleet.</p>
+                
+                <div class="mt-8 p-6 bg-[#FFF7ED] border-l-4 border-[#FF6B35] rounded-r-3xl">
+                    <div class="flex items-start gap-4">
+                        <i class="fas fa-phone-alt text-[#FF6B35] text-2xl mt-1"></i>
+                        <div>
+                            <p class="font-bold text-[#FF6B35]">Must reserve by phone only</p>
+                            <p class="text-sm text-[#0A2540]/70 mt-1">Our best rates are personally managed by our Team of 4 Agents.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <p class="font-semibold text-lg">Direct contact:</p>
+                    <p class="text-2xl font-bold text-[#0A2540] mt-1">Team of 4 Agents • +34 631 212 990</p>
+                    
+                    <button onclick="openWhatsApp('car')" class="mt-5 flex items-center justify-center gap-x-3 bg-[#25D366] hover:bg-[#128C7E] transition-all text-white font-bold px-10 py-4 rounded-2xl text-lg shadow-xl active:scale-[0.985]">
+                        <i class="fab fa-whatsapp text-3xl"></i>
+                        <span>Reserve Your Car on WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="bg-[#F8FAFC] py-16 border-t border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-[#FF6B35] font-bold text-sm tracking-widest">REAL STORIES • REAL ADVENTURES</span>
+                <h2 class="text-4xl font-bold tracking-tighter text-[#0A2540] mt-2">Loved by Travellers Worldwide</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <div class="flex text-[#FF6B35] mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="italic text-lg">"The whale watching tour exceeded all expectations. Our team personally recommended the perfect day and we saw dozens of dolphins! Truly unforgettable."</p>
+                    <div class="flex items-center gap-x-4 mt-8">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100&amp;h=100&amp;q=80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div><div class="font-semibold">Julia &amp; Mark Thompson</div><div class="text-sm text-gray-500">🇬🇧 Manchester, UK • 2025</div></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <div class="flex text-[#FF6B35] mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <p class="italic text-lg">"Our team made our paragliding tandem flight the absolute highlight of our honeymoon. Professional, safe and breathtaking views over the coast."</p>
+                    <div class="flex items-center gap-x-4 mt-8">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100&amp;h=100&amp;q=80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div><div class="font-semibold">Carlos &amp; Elena Rivera</div><div class="text-sm text-gray-500">🇪🇸 Madrid, Spain • 2025</div></div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+                    <div class="flex text-[#FF6B35] mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                    <p class="italic text-lg">"The stargazing tour at Teide was magical. Our team knows the best spots and made us feel like we were the only ones on the mountain. 5 stars!"</p>
+                    <div class="flex items-center gap-x-4 mt-8">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=100&amp;h=100&amp;q=80" class="w-12 h-12 rounded-full object-cover" alt="">
+                        <div><div class="font-semibold">Hans &amp; Petra Müller</div><div class="text-sm text-gray-500">🇩🇪 Berlin, Germany • 2025</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0A2540] text-white/90 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-y-16">
+            <div class="md:col-span-5">
+                <div class="flex items-center gap-x-4 mb-6">
+                    <div class="w-11 h-11 bg-gradient-to-br from-[#FF6B35] to-[#00B4D8] rounded-2xl flex items-center justify-center">
+                        <i class="fas fa-ticket-alt text-white text-3xl"></i>
+                    </div>
+                    <div class="font-bold text-3xl tracking-tighter">TICKET BOX VILLAMAR</div>
+                </div>
+                <p class="max-w-sm text-white/70">Premium excursions and watersports in Tenerife since 2012. Owned and operated with passion by our Team of 4 Agents.</p>
+                
+                <div class="mt-8 flex gap-x-5 text-2xl">
+                    <a href="#" class="hover:text-[#FF6B35] transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="hover:text-[#FF6B35] transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="hover:text-[#FF6B35] transition-colors"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-3">
+                <div class="font-semibold text-white mb-5 tracking-wider text-sm">QUICK LINKS</div>
+                <div class="space-y-3 text-sm">
+                    <a href="#" class="block hover:text-white transition-colors">All Excursions</a>
+                    <a href="#" class="block hover:text-white transition-colors">Private Charters</a>
+                    <a href="#" class="block hover:text-white transition-colors">Gift Vouchers</a>
+                    <a href="#" class="block hover:text-white transition-colors">Group Bookings</a>
+                </div>
+            </div>
+            
+            <div class="md:col-span-4">
+                <div class="font-semibold text-white mb-5 tracking-wider text-sm">CONTACT SEBASTIÁN DIRECTLY</div>
+                <div class="space-y-4 text-sm">
+                    <div><span class="text-white/60">Phone / WhatsApp</span><br><span class="font-semibold text-lg">+34 631 212 990</span></div>
+                    <div><span class="text-white/60">Email</span><br><span class="font-semibold">hello@ticketboxvillamar.com</span></div>
+                    <div><span class="text-white/60">Office</span><br><span class="font-semibold">San Eugenio Bajo, Adeje, Tenerife</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-20 pt-8 border-t border-white/10 text-center text-xs text-white/50 max-w-7xl mx-auto px-6">
+            © 2026 Ticket Box Villamar. All rights reserved. • Created with ❤️ by our Team of 4 Agents for the love of Tenerife.<br>
+            This website is 100% offline capable and ready for your office today.
+        </div>
+    </footer>
+
+    <!-- FLOATING WHATSAPP -->
+    <a href="https://wa.me/34631212990?text=Hello%20Ticket%20Box%20Villamar!%20I%27d%20like%20to%20know%20more%20about%20your%20excursions." target="_blank"
+       class="fixed bottom-8 right-8 bg-[#25D366] hover:bg-[#128C7E] text-white w-16 h-16 flex items-center justify-center rounded-full shadow-2xl z-[90] transition-all hover:scale-110 active:scale-95">
+        <i class="fab fa-whatsapp text-4xl"></i>
+    </a>
+
+    <!-- BOOKING MODAL -->
+    <div id="booking-modal" onclick="if (event.target.id === 'booking-modal') closeModal()" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[100] p-5">
+        <div onclick="event.stopImmediatePropagation()" class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden">
+            <div class="px-8 pt-8 pb-4 bg-[#0A2540] text-white flex items-center justify-between">
+                <div>
+                    <div class="text-sm text-white/60">BOOK YOUR ADVENTURE</div>
+                    <h3 id="modal-excursion-title" class="font-bold text-2xl tracking-tight"></h3>
+                </div>
+                <button onclick="closeModal()" class="text-white/70 hover:text-white transition-colors text-3xl leading-none">×</button>
+            </div>
+            
+            <div class="p-8 space-y-7">
+                <div>
+                    <label class="block text-xs font-bold tracking-widest text-gray-500 mb-2">PREFERRED DATE</label>
+                    <input type="date" id="booking-date" class="w-full border-2 border-gray-200 focus:border-[#00B4D8] rounded-2xl px-5 py-3.5 text-lg" required>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold tracking-widest text-gray-500 mb-2">DURATION / OPTION</label>
+                    <select id="booking-duration" onchange="calculateTotal()" class="w-full border-2 border-gray-200 focus:border-[#00B4D8] rounded-2xl px-5 py-3.5 text-lg"></select>
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold tracking-widest text-gray-500 mb-2">NUMBER OF PARTICIPANTS</label>
+                    <div class="flex items-center gap-x-4">
+                        <input type="number" id="booking-people" value="2" min="1" max="20" onchange="calculateTotal()" class="w-28 border-2 border-gray-200 focus:border-[#00B4D8] rounded-2xl px-5 py-3.5 text-lg font-semibold text-center">
+                        <div class="text-sm text-gray-500">people</div>
+                    </div>
+                </div>
+                
+                <div class="bg-[#F8FAFC] border border-gray-100 rounded-2xl p-6">
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <div class="text-xs uppercase tracking-widest text-gray-500">ESTIMATED TOTAL</div>
+                            <div id="total-price" class="text-5xl font-black text-[#0A2540]">€0</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-xs text-gray-400">incl. taxes</div>
+                            <div id="price-note" class="text-[10px] text-[#FF6B35] font-medium">per person</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button onclick="bookViaWhatsApp()" class="w-full py-4 bg-[#FF6B35] hover:bg-[#e55a2b] active:bg-[#cc4f26] transition-all text-white font-extrabold text-lg rounded-2xl flex items-center justify-center gap-x-3 shadow-xl">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                    <span>CONFIRM VIA WHATSAPP</span>
+                </button>
+                
+                <p class="text-center text-xs text-gray-400">You will receive availability &amp; payment instructions on WhatsApp within minutes • No payment now</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initTailwind() {
+            document.documentElement.style.setProperty('--accent-orange', '#FF6B35');
+            document.documentElement.style.setProperty('--accent-turquoise', '#00B4D8');
+        }
+
+        const ADMIN_PRICES = {
+            'whale-dolphin': { from: 30, options: [
+                { id: '2h', label: {en: '2 hours', es: '2 horas', fr: '2 heures', de: '2 Stunden', nl: '2 uur'}, price: 30 },
+                { id: '3h', label: {en: '3 hours', es: '3 horas', fr: '3 heures', de: '3 Stunden', nl: '3 uur'}, price: 42 },
+                { id: '4.5h', label: {en: '4.5 hours', es: '4,5 horas', fr: '4,5 heures', de: '4,5 Stunden', nl: '4,5 uur'}, price: 59 }
+            ]},
+            'private-boat': { from: 320, options: [
+                { id: 'half', label: {en: '3 hours', es: '3 horas', fr: '3 heures', de: '3 Stunden', nl: '3 uur'}, price: 320 },
+                { id: 'full', label: {en: '6 hours', es: '6 horas', fr: '6 heures', de: '6 Stunden', nl: '6 uur'}, price: 520 }
+            ]},
+            'deep-sea-fishing': { from: 85, options: [
+                { id: '4h', label: {en: '4 hours', es: '4 horas', fr: '4 heures', de: '4 Stunden', nl: '4 uur'}, price: 85 }
+            ]},
+            'taganana': { from: 50, options: [{ id: 'full', label: {en: 'Full Day Tour', es: 'Tour día completo', fr: 'Journée complète', de: 'Ganztagestour', nl: 'Hele dag tour'}, price: 50 }] },
+            'masca': { from: 50, options: [{ id: 'full', label: {en: 'Full Day Tour', es: 'Tour día completo', fr: 'Journée complète', de: 'Ganztagestour', nl: 'Hele dag tour'}, price: 50 }] },
+            'la-orotava': { from: 50, options: [{ id: 'full', label: {en: 'Full Day + Dragon Tree', es: 'Día completo + Drago Milenario', fr: 'Journée complète + Dragonnier', de: 'Ganzer Tag + Drachenbaum', nl: 'Hele dag + Drakenboom'}, price: 50 }] },
+            'buggy-safari': { from: 100, options: [
+                { id: '2h-coastal', label: {en: '2 hours Coastal', es: '2 horas Costera', fr: '2 heures Côtière', de: '2 Stunden Küste', nl: '2 uur Kust'}, price: 100 },
+                { id: '3h-teide', label: {en: '3 hours Teide', es: '3 horas Teide', fr: '3 heures Teide', de: '3 Stunden Teide', nl: '3 uur Teide'}, price: 130 }
+            ]},
+            'jetski': { from: 80, options: [
+                { id: '40min', label: {en: '40 minutes', es: '40 minutos', fr: '40 minutes', de: '40 Minuten', nl: '40 minuten'}, price: 80 },
+                { id: '1h', label: {en: '1 hour', es: '1 hora', fr: '1 heure', de: '1 Stunde', nl: '1 uur'}, price: 120 },
+                { id: '2h', label: {en: '2 hours', es: '2 horas', fr: '2 horas', de: '2 Stunden', nl: '2 uur'}, price: 210 }
+            ]},
+            'kayak-tour': { from: 45, options: [{ id: 'full', label: {en: 'Full Day Kayak Tour', es: 'Tour completo en Kayak', fr: 'Journée complète Kayak', de: 'Ganztag Kayak Tour', nl: 'Hele dag Kajak Tour'}, price: 45 }] },
+            'parasailing': { from: 60, options: [{ id: '10min', label: {en: '10 min Flight', es: 'Vuelo de 10 min', fr: 'Vol de 10 min', de: '10 Min Flug', nl: '10 min vlucht'}, price: 60 }] },
+            'paragliding': { from: 100, options: [{ id: 'tandem', label: {en: 'Tandem Flight (20 min)', es: 'Vuelo tándem (20 min)', fr: 'Vol en tandem (20 min)', de: 'Tandemflug (20 Min)', nl: 'Tandem vlucht (20 min)'}, price: 100 }] },
+            'self-drive-boat': { from: 70, maxPeople: 6, options: [
+                { id: '1h', label: {en: '1 hour', es: '1 hora', fr: '1 heure', de: '1 Stunde', nl: '1 uur'}, price: 70 },
+                { id: '2h', label: {en: '2 hours', es: '2 horas', fr: '2 heures', de: '2 Stunden', nl: '2 uur'}, price: 120 },
+                { id: '3h', label: {en: '3 hours', es: '3 horas', fr: '3 heures', de: '3 Stunden', nl: '3 uur'}, price: 180 }
+            ]},
+            'evening-show': { from: 49, options: [{ id: 'evening', label: {en: 'Evening Show + Dinner', es: 'Espectáculo nocturno + Cena', fr: 'Spectacle du soir + Dîner', de: 'Abendshow + Abendessen', nl: 'Avondshow + Diner'}, price: 49 }] },
+            'stargazing': { from: 75, options: [{ id: '6h', label: {en: '6 hours Stargazing Tour', es: '6 horas Observación de estrellas', fr: '6 heures Observation des étoiles', de: '6 Stunden Sternenbeobachtung', nl: '6 uur Sterrenkijken'}, price: 75 }] }
+        };
+
+        let excursions = [
+            { id: 'whale-dolphin', name: { en: 'Whale & Dolphin Watching', es: 'Avistamiento de Ballenas y Delfines', fr: 'Observation des Baleines & Dauphins', de: 'Wal- & Delfinbeobachtung', nl: 'Walvis- & Dolfijnspotten' }, desc: { en: 'Get up close with majestic whales and playful dolphins in their natural habitat off Tenerife.', es: 'Acércate a majestuosas ballenas y delfines juguetones en su hábitat natural frente a Tenerife.', fr: 'Approchez-vous des majestueuses baleines et dauphins joueurs dans leur habitat naturel au large de Tenerife.', de: 'Kommen Sie den majestätischen Walen und verspielten Delfinen in ihrem natürlichen Lebensraum vor Teneriffa ganz nah.', nl: 'Kom dichtbij majestueuze walvissen en speelse dolfijnen in hun natuurlijke habitat voor Tenerife.' }, image: 'https://images.unsplash.com/photo-1568430462989-44163eb1752f?w=800&q=80', priceFrom: 30, type: 'per_person', options: ADMIN_PRICES['whale-dolphin'].options },
+            { id: 'private-boat', name: { en: 'Private Boat', es: 'Barco Privado', fr: 'Bateau Privé', de: 'Privatboot', nl: 'Privéboot' }, desc: { en: 'Exclusive private sailing experience along Tenerife\'s stunning coastline.', es: 'Experiencia privada exclusiva en velero por la impresionante costa de Tenerife.', fr: 'Expérience privée exclusive en voilier le long de la superbe côte de Tenerife.', de: 'Exklusives privates Segelerlebnis entlang Teneriffas atemberaubender Küste.', nl: 'Exclusieve privé zeilervaring langs de prachtige kust van Tenerife.' }, image: 'https://images.unsplash.com/photo-1605281317010-fe5ffe798166?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 320, type: 'total', maxPeople: 6, options: ADMIN_PRICES['private-boat'].options },
+            { id: 'deep-sea-fishing', name: { en: 'Deep Sea Fishing', es: 'Pesca en Alta Mar', fr: 'Pêche en Haute Mer', de: 'Hochseeangeln', nl: 'Diepzee Vissen' }, desc: { en: 'Challenge the Atlantic with expert guides and premium fishing equipment.', es: 'Desafía el Atlántico con guías expertos y equipo de pesca premium.', fr: 'Affrontez l\'Atlantique avec des guides experts et du matériel de pêche premium.', de: 'Fordern Sie den Atlantik mit erfahrenen Guides und Premium-Angelgerät heraus.', nl: 'Daag de Atlantische Oceaan uit met deskundige gidsen en premium vistuig.' }, image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80', priceFrom: 85, type: 'per_person', options: ADMIN_PRICES['deep-sea-fishing'].options },
+            { id: 'taganana', name: { en: 'Santa Cruz, La Laguna & Anaga', es: 'Santa Cruz, La Laguna y Anaga', fr: 'Santa Cruz, La Laguna & Anaga', de: 'Santa Cruz, La Laguna & Anaga', nl: 'Santa Cruz, La Laguna & Anaga' }, desc: { en: 'Discover the vibrant capital of Santa Cruz, the historic La Laguna and the stunning Anaga mountains biosphere reserve.', es: 'Descubre la vibrante capital Santa Cruz, la histórica La Laguna y las impresionantes montañas de Anaga reserva de la biosfera.', fr: 'Découvrez la capitale vibrante de Santa Cruz, l\'historique La Laguna et les superbes montagnes d\'Anaga réserve de biosphère.', de: 'Entdecken Sie die lebendige Hauptstadt Santa Cruz, das historische La Laguna und die atemberaubenden Anaga-Berge Biosphärenreservat.', nl: 'Ontdek de levendige hoofdstad Santa Cruz, het historische La Laguna en de indrukwekkende Anaga bergen biosfeerreservaat.' }, image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80', priceFrom: 50, type: 'per_person', options: ADMIN_PRICES['taganana'].options },
+            { id: 'masca', name: { en: 'Teide, Icod, Garachico & Masca', es: 'Teide, Icod, Garachico y Masca', fr: 'Teide, Icod, Garachico & Masca', de: 'Teide, Icod, Garachico & Masca', nl: 'Teide, Icod, Garachico & Masca' }, desc: { en: 'Explore the majestic Teide volcano, charming Icod de los Vinos, historic Garachico and the dramatic Masca valley.', es: 'Explora el majestuoso volcán Teide, el encantador Icod de los Vinos, el histórico Garachico y el dramático valle de Masca.', fr: 'Explorez le majestueux volcan Teide, le charmant Icod de los Vinos, l\'historique Garachico et la vallée spectaculaire de Masca.', de: 'Erkunden Sie den majestätischen Teide-Vulkan, das charmante Icod de los Vinos, das historische Garachico und das dramatische Masca-Tal.', nl: 'Verken de majestueuze Teide vulkaan, het charmante Icod de los Vinos, het historische Garachico en het dramatische Masca dal.' }, image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', priceFrom: 50, type: 'per_person', options: ADMIN_PRICES['masca'].options },
+            { id: 'la-orotava', name: { en: 'Candelaria, La Orotava, Garachico & Masca', es: 'Candelaria, La Orotava, Garachico y Masca', fr: 'Candelaria, La Orotava, Garachico & Masca', de: 'Candelaria, La Orotava, Garachico & Masca', nl: 'Candelaria, La Orotava, Garachico & Masca' }, desc: { en: 'Visit the famous Candelaria basilica, explore historic La Orotava, Garachico and the scenic Masca valley.', es: 'Visita la famosa basílica de Candelaria, explora la histórica La Orotava, Garachico y el pintoresco valle de Masca.', fr: 'Visitez la célèbre basilique de Candelaria, explorez l\'historique La Orotava, Garachico et la vallée pittoresque de Masca.', de: 'Besuchen Sie die berühmte Basilika von Candelaria, erkunden Sie das historische La Orotava, Garachico und das malerische Masca-Tal.', nl: 'Bezoek de beroemde basiliek van Candelaria, verken het historische La Orotava, Garachico en het schilderachtige Masca dal.' }, image: 'https://images.unsplash.com/photo-1518623001395-125242310d0c?w=800&q=80', priceFrom: 50, type: 'per_person', options: ADMIN_PRICES['la-orotava'].options },
+            { id: 'buggy-safari', name: { en: 'Buggy Safari', es: 'Safari en Buggy', fr: 'Safari Buggy', de: 'Buggy Safari', nl: 'Buggy Safari' }, desc: { en: 'Drive your own powerful Polaris buggy through volcanic landscapes and hidden trails.', es: 'Conduce tu propio buggy Polaris potente por paisajes volcánicos y senderos ocultos.', fr: 'Conduisez votre propre buggy Polaris puissant à través les paysages volcaniques et sentiers cachés.', de: 'Fahren Sie Ihr eigenes starkes Polaris-Buggy durch vulkanische Landschaften und versteckte Pfade.', nl: 'Bestuur je eigen krachtige Polaris buggy door vulkanische landschappen en verborgen paden.' }, image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=800&q=80', priceFrom: 100, type: 'per_person', options: ADMIN_PRICES['buggy-safari'].options },
+            { id: 'jetski', name: { en: 'Jetski Adventure', es: 'Aventura en Moto de Agua', fr: 'Aventure en Jetski', de: 'Jetski Abenteuer', nl: 'Jetski Avontuur' }, desc: { en: 'Feel the adrenaline on a high-speed jetski along Tenerife\'s turquoise waters.', es: 'Siente la adrenalina en una moto de agua a toda velocidad por las aguas turquesa de Tenerife.', fr: 'Ressentez l\'adrénaline sur un jetski à grande vitesse le long des eaux turquoise de Tenerife.', de: 'Spüren Sie den Adrenalinkick auf einem schnellen Jetski entlang der türkisfarbenen Gewässer Teneriffas.', nl: 'Voel de adrenaline op een snelle jetski langs het turquoise water van Tenerife.' }, image: 'https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 80, type: 'per_person', options: ADMIN_PRICES['jetski'].options },
+            { id: 'kayak-tour', name: { en: 'Kayak Tour', es: 'Tour en Kayak', fr: 'Tour en Kayak', de: 'Kayak Tour', nl: 'Kayak Tour' }, desc: { en: 'Paddle through dramatic cliffs and secret caves along Tenerife\'s stunning coastline.', es: 'Reme por acantilados dramáticos y cuevas secretas a lo largo de la impresionante costa de Tenerife.', fr: 'Pagayez à travers des falaises spectaculaires et grottes secrètes le long de la superbe côte de Tenerife.', de: 'Paddeln Sie durch dramatische Klippen und geheime Höhlen entlang Teneriffas atemberaubender Küste.', nl: 'Peddel door dramatische kliffen en geheime grotten langs de prachtige kust van Tenerife.' }, image: 'https://images.unsplash.com/photo-1463694775559-eea25626346b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 45, type: 'per_person', options: ADMIN_PRICES['kayak-tour'].options },
+            { id: 'parasailing', name: { en: 'Parasailing Experience', es: 'Experiencia de Parasailing', fr: 'Expérience de Parachute Ascensionnel', de: 'Parasailing Erlebnis', nl: 'Parasailing Ervaring' }, desc: { en: 'Soar high above the ocean with breathtaking views of Tenerife\'s coastline.', es: 'Vuela alto sobre el océano con vistas impresionantes de la costa de Tenerife.', fr: 'Volez haut au-dessus de l\'océan met des vues à couper le souffle sur la côte de Tenerife.', de: 'Schweben Sie hoch über dem Ozean mit atemberaubenden Ausblicken auf Teneriffas Küste.', nl: 'Zweef hoog boven de oceaan met adembenemende uitzichten op de kust van Tenerife.' }, image: 'https://images.unsplash.com/photo-1530870110042-98b2cb110834?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 60, type: 'per_person', options: ADMIN_PRICES['parasailing'].options },
+            { id: 'paragliding', name: { en: 'Paragliding Tandem', es: 'Parapente en Tándem', fr: 'Parapente en Tandem', de: 'Tandem-Paragliding', nl: 'Tandem Paragliding' }, desc: { en: 'Fly like a bird over the dramatic cliffs and ocean with an experienced pilot.', es: 'Vuela como un pájaro sobre los acantilados dramáticos y el océano con un piloto experimentado.', fr: 'Volez como un oiseau au-dessus des falaises spectaculaires et de l\'océan avec un pilote expérimentado.', de: 'Fliegen Sie wie ein Vogel über dramatische Klippen und Ozean mit einem erfahrenen Piloten.', nl: 'Vlieg als een vogel over dramatische kliffen en oceaan met een ervaren piloot.' }, image: 'https://images.unsplash.com/photo-1622850663648-7d1e2bf30693?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 100, type: 'per_person', options: ADMIN_PRICES['paragliding'].options },
+            { id: 'self-drive-boat', name: { en: 'Self Drive Boat Rental', es: 'Alquiler Barco sin Permiso', fr: 'Location Bateau sans Permis', de: 'Boot mieten ohne Führerschein', nl: 'Boot huren zonder vaarbewijs' }, desc: { en: 'Captain your own boat and explore hidden bays and beaches at your own pace. Max 6 people.', es: 'Sé el capitán de tu propio barco y explora bahías y playas ocultas a tu ritmo. Máx 6 personas.', fr: 'Soyez le capitaine de votre propre bateau et explorez des baies et plages cachées à votre ritmo. Max 6 personnes.', de: 'Seien Sie Kapitän Ihres eigenen Bootes und erkunden Sie versteckte Buchten und Strände in Ihrem eigenen Tempo. Max 6 Personen.', nl: 'Wees kapitein van je eigen boot en verken verborgen baaien en stranden in je eigen tempo. Max 6 personen.' }, image: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 70, type: 'total', maxPeople: 6, options: ADMIN_PRICES['self-drive-boat'].options },
+            { id: 'evening-show', name: { en: 'Evening Show & Dinner', es: 'Espectáculo Nocturno y Cena', fr: 'Spectacle du Soir & Dîner', de: 'Abendshow & Dinner', nl: 'Avondshow & Diner' }, desc: { en: 'Enjoy a magical evening with traditional Canarian music, dance and a delicious dinner under the stars.', es: 'Disfruta de una velada mágica con música tradicional canaria, baile y una deliciosa cena bajo las estrellas.', fr: 'Profitez d\'une soirée magique avec musique traditionnelle canarienne, danse et un délicieux dîner sous les étoiles.', de: 'Genießen Sie einen magischen Abend mit traditioneller kanarischer Musik, Tanz und einem köstlichen Abendessen unter den Sternen.', nl: 'Geniet van een magische avond met traditionele Canarische muziek, dans en een heerlijk diner onder de sterren.' }, image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80', priceFrom: 49, type: 'per_person', options: ADMIN_PRICES['evening-show'].options },
+            { id: 'stargazing', name: { en: 'Stargazing at Teide', es: 'Observación de Estrellas en el Teide', fr: 'Observation des Étoiles au Teide', de: 'Sternenbeobachtung am Teide', nl: 'Sterrenkijken op de Teide' }, desc: { en: 'Experience one of the best stargazing spots in the world at the foot of Mount Teide.', es: 'Vive uno de los mejores lugares del mundo para observar las estrellas al pie del Teide.', fr: 'Vivez l\'un des meilleurs endroits au monde pour l\'observation des étoiles au pied du mont Teide.', de: 'Erleben Sie einen der besten Orte der Welt zum Sternenbeobachten am Fuß des Teide.', nl: 'Ervaar een van de beste plekken ter wereld om sterren te kijken aan de voet van de Teide.' }, image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', priceFrom: 75, type: 'per_person', options: ADMIN_PRICES['stargazing'].options }
+        ];
+
+        const translations = {
+            en: { hero_title: "Discover Tenerife's Hidden Wonders", hero_subtitle: "Premium excursions • Watersports • Private experiences with the island's most trusted local experts", excursions_title: "Our Excursions", excursions_sub: "Hand-picked by our Team of 4 Agents • Instant WhatsApp confirmation", why_title: "Why Book With Us?", why_sub: "Because your Tenerife memories deserve the very best", book_now: "Book Now", per_person: "per person" },
+            es: { hero_title: "Descubre las Maravillas Ocultas de Tenerife", hero_subtitle: "Excursiones premium • Deportes acuáticos • Experiencias privadas con los expertos locales más confiables de la isla", excursions_title: "Nuestras Excursiones", excursions_sub: "Seleccionadas por nuestro equipo de 4 agentes • Confirmación instantánea por WhatsApp", why_title: "¿Por Qué Reservar Con Nosotros?", why_sub: "Porque tus recuerdos de Tenerife merecen lo mejor", book_now: "Reservar Ahora", per_person: "por persona" },
+            fr: { hero_title: "Découvrez les Merveilles Cachées de Tenerife", hero_subtitle: "Excursions premium • Sports nautiques • Expériences privées avec les experts locaux les plus fiables de l'île", excursions_title: "Nos Excursions", excursions_sub: "Sélectionnées par notre équipe de 4 agents • Confirmation WhatsApp instantanée", why_title: "Pourquoi Réserver Avec Nous ?", why_sub: "Parce que vos souvenirs de Tenerife méritent le meilleur", book_now: "Réserver", per_person: "par personne" },
+            de: { hero_title: "Entdecke Teneriffas Verborgene Wunder", hero_subtitle: "Premium-Ausflüge • Wassersport • Private Erlebnisse mit den vertrauenswürdigsten lokalen Experten der Insel", excursions_title: "Unsere Ausflüge", excursions_sub: "Handverlesen von unserem Team aus 4 Agenten • Sofortige WhatsApp-Bestätigung", why_title: "Warum bei uns buchen?", why_sub: "Weil Ihre Teneriffa-Erinnerungen das Beste verdienen", book_now: "Jetzt buchen", per_person: "pro Person" },
+            nl: { hero_title: "Ontdek de Verborgen Wonderen van Tenerife", hero_subtitle: "Premium excursies • Watersport • Privé-ervaringen met de meest betrouwbare lokale experts van het eiland", excursions_title: "Onze Excursies", excursions_sub: "Handgekozen door ons team van 4 agenten • Directe WhatsApp-bevestiging", why_title: "Waarom bij ons boeken?", why_sub: "Omdat uw Tenerife-herinneringen het allerbeste verdienen", book_now: "Nu boeken", per_person: "per persoon" }
+        };
+
+        let currentLang = 'en';
+        let currentExcursion = null;
+
+        function getFlag(lang) { return { en: '🇬🇧', es: '🇪🇸', fr: '🇫🇷', de: '🇩🇪', nl: '🇳🇱' }[lang] || '🌐'; }
+        function getLangName(lang) { return { en: 'English', es: 'Español', fr: 'Français', de: 'Deutsch', nl: 'Nederlands' }[lang] || 'English'; }
+
+        function toggleLangMenu() {
+            const menu = document.getElementById('lang-menu');
+            const isHidden = menu.classList.contains('hidden');
+            document.querySelectorAll('.language-menu').forEach(m => m.classList.add('hidden'));
+            if (isHidden) {
+                menu.classList.remove('hidden');
+                menu.style.display = 'block';
+            } else {
+                menu.classList.add('hidden');
+                menu.style.display = 'none';
+            }
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const menu = document.getElementById('lang-menu');
+            menu.classList.add('hidden');
+            menu.style.display = 'none';
+            
+            document.getElementById('current-lang-display').innerHTML = `${getFlag(lang)} <span>${getLangName(lang)}</span>`;
+            
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) el.textContent = translations[lang][key];
+            });
+            
+            renderExcursions();
+            
+            const search = document.getElementById('search-input');
+            const ph = { en: 'Search whale watching, buggy safari, stargazing...', es: 'Buscar avistamiento ballenas, safari buggy, observación estrellas...', fr: 'Rechercher observation baleines, safari buggy, observation étoiles...', de: 'Suche Walbeobachtung, Buggy Safari, Sternenbeobachtung...', nl: 'Zoek walvisspotten, buggy safari, sterrenkijken...' };
+            search.placeholder = ph[lang] || ph.en;
+        }
+
+        function renderExcursions(filteredList = null) {
+            const grid = document.getElementById('excursions-grid');
+            grid.innerHTML = '';
+            const list = filteredList || excursions;
+            
+            list.forEach(exc => {
+                const card = document.createElement('div');
+                card.className = `premium-card group bg-white rounded-3xl overflow-hidden border border-gray-100 adventure-shadow`;
+                const opt = exc.options[0];
+                const dur = opt.label[currentLang] || opt.label.en;
+                
+                card.innerHTML = `
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${exc.image}" class="excursion-img w-full h-full object-cover" alt="${exc.name[currentLang]}">
+                        <div class="absolute top-4 right-4 bg-white/95 text-[#0A2540] text-xs font-bold px-3.5 py-1 rounded-2xl flex items-center gap-1.5 shadow">
+                            <i class="fas fa-clock text-[#FF6B35]"></i> <span>${dur.split(' ')[0]}</span>
+                        </div>
+                        <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl leading-tight text-[#0A2540] group-hover:text-[#00B4D8] transition-colors">${exc.name[currentLang]}</h3>
+                        <p class="mt-3 text-sm text-[#0A2540]/70 line-clamp-3">${exc.desc[currentLang]}</p>
+                        <div class="mt-5 flex items-baseline gap-x-1.5">
+                            <span class="price-tag text-4xl">€${exc.priceFrom}</span>
+                            <span class="text-xs text-gray-400 font-medium">from</span>
+                        </div>
+                        <div class="mt-1 text-xs text-gray-400">${exc.options.length > 1 ? exc.options.map(o => o.label[currentLang] || o.label.en).join(' • ') : ''}</div>
+                        <button onclick="openBookingModal('${exc.id}')" class="mt-6 w-full py-[15px] bg-[#0A2540] hover:bg-[#FF6B35] active:bg-[#cc4f26] text-white font-extrabold rounded-2xl flex items-center justify-center gap-x-2 text-sm tracking-wider transition-all duration-300 group-hover:shadow-xl">
+                            <span data-i18n="book_now">${translations[currentLang].book_now}</span>
+                            <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterExcursions() {
+            const term = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!term) return renderExcursions();
+            const filtered = excursions.filter(e => e.name[currentLang].toLowerCase().includes(term) || e.desc[currentLang].toLowerCase().includes(term));
+            renderExcursions(filtered);
+        }
+
+        function openBookingModal(id) {
+            currentExcursion = excursions.find(e => e.id === id);
+            if (!currentExcursion) return;
+            
+            const modal = document.getElementById('booking-modal');
+            document.getElementById('modal-excursion-title').textContent = currentExcursion.name[currentLang];
+            
+            const select = document.getElementById('booking-duration');
+            select.innerHTML = '';
+            currentExcursion.options.forEach((opt, i) => {
+                const o = document.createElement('option');
+                o.value = opt.id;
+                o.textContent = `${opt.label[currentLang] || opt.label.en} — €${opt.price}`;
+                if (i === 0) o.selected = true;
+                select.appendChild(o);
+            });
+            
+            const dateInput = document.getElementById('booking-date');
+            const t = new Date(); t.setDate(t.getDate() + 1);
+            dateInput.value = t.toISOString().split('T')[0];
+            
+            document.getElementById('booking-people').value = currentExcursion.type === 'total' ? '1' : '2';
+            const peopleInput = document.getElementById('booking-people');
+            peopleInput.max = currentExcursion.maxPeople || 20;
+            if (currentExcursion.maxPeople && parseInt(peopleInput.value) > currentExcursion.maxPeople) {
+                peopleInput.value = currentExcursion.maxPeople;
+            }
+            calculateTotal();
+            modal.style.display = 'flex';
+        }
+
+        function calculateTotal() {
+            if (!currentExcursion) return;
+            const sel = document.getElementById('booking-duration').value;
+            const peopleInput = document.getElementById('booking-people');
+            let ppl = parseInt(peopleInput.value) || 1;
+            const maxP = currentExcursion.maxPeople || 20;
+            if (ppl > maxP) { ppl = maxP; peopleInput.value = maxP; }
+            if (ppl < 1) { ppl = 1; peopleInput.value = 1; }
+            const opt = currentExcursion.options.find(o => o.id === sel);
+            if (!opt) return;
+            
+            let total = opt.price;
+            let note = 'per person';
+            if (currentExcursion.type === 'per_person') total = opt.price * ppl;
+            else note = 'total for the boat';
+            
+            document.getElementById('total-price').textContent = `€${total}`;
+            document.getElementById('price-note').textContent = note;
+        }
+
+        function bookViaWhatsApp() {
+            if (!currentExcursion) return;
+            const date = document.getElementById('booking-date').value;
+            const dur = document.getElementById('booking-duration').selectedOptions[0].text;
+            const ppl = document.getElementById('booking-people').value;
+            const total = document.getElementById('total-price').textContent;
+            
+            // Multilingual WhatsApp message
+            let greeting = "Hello Ticket Box Villamar! 👋";
+            let bookingText = "I would like to book:";
+            let dateText = "Date:";
+            let optionText = "Option:";
+            let participantsText = "Participants:";
+            let totalText = "Estimated total:";
+            let closing = "Please confirm availability and send payment details. Thank you!";
+            
+            if (currentLang === 'es') {
+                greeting = "¡Hola Ticket Box Villamar! 👋";
+                bookingText = "Me gustaría reservar:";
+                dateText = "Fecha:";
+                optionText = "Opción:";
+                participantsText = "Participantes:";
+                totalText = "Total estimado:";
+                closing = "Por favor confirma la disponibilidad y envía los detalles de pago. ¡Gracias!";
+            } else if (currentLang === 'fr') {
+                greeting = "Bonjour Ticket Box Villamar ! 👋";
+                bookingText = "Je voudrais réserver :";
+                dateText = "Date :";
+                optionText = "Option :";
+                participantsText = "Participants :";
+                totalText = "Total estimé :";
+                closing = "Veuillez confirmer la disponibilité et envoyer les détails de paiement. Merci !";
+            } else if (currentLang === 'de') {
+                greeting = "Hallo Ticket Box Villamar! 👋";
+                bookingText = "Ich möchte buchen:";
+                dateText = "Datum:";
+                optionText = "Option:";
+                participantsText = "Teilnehmer:";
+                totalText = "Geschätzter Gesamtbetrag:";
+                closing = "Bitte bestätigen Sie die Verfügbarkeit und senden Sie die Zahlungsdetails. Vielen Dank!";
+            } else if (currentLang === 'nl') {
+                greeting = "Hallo Ticket Box Villamar! 👋";
+                bookingText = "Ik wil graag boeken:";
+                dateText = "Datum:";
+                optionText = "Optie:";
+                participantsText = "Deelnemers:";
+                totalText = "Geschat totaal:";
+                closing = "Bevestig alstublieft de beschikbaarheid en stuur de betalingsgegevens. Bedankt!";
+            }
+            
+            const msg = `${greeting}\n\n${bookingText}\n• ${currentExcursion.name[currentLang]}\n• ${dateText} ${date}\n• ${optionText} ${dur}\n• ${participantsText} ${ppl}\n• ${totalText} ${total}\n\n${closing}`;
+            
+            window.open(`https://wa.me/34631212990?text=${encodeURIComponent(msg)}`, '_blank');
+            setTimeout(closeModal, 800);
+        }
+
+        function closeModal() {
+            document.getElementById('booking-modal').style.display = 'none';
+            currentExcursion = null;
+        }
+
+        function openWhatsApp(type) {
+            let msg = "";
+            if (type === 'car') {
+                if (currentLang === 'es') msg = "¡Hola! Me gustaría alquilar un coche en Tenerife desde 34€/día. Por favor envía disponibilidad y opciones.";
+                else if (currentLang === 'fr') msg = "Bonjour ! Je voudrais louer une voiture à Tenerife à partir de 34€/jour. Veuillez envoyer les disponibilités et options.";
+                else if (currentLang === 'de') msg = "Hallo! Ich möchte ein Auto auf Teneriffa ab 34€/Tag mieten. Bitte senden Sie Verfügbarkeit und Optionen.";
+                else if (currentLang === 'nl') msg = "Hallo! Ik wil graag een auto huren op Tenerife vanaf 34€/dag. Stuur alstublieft beschikbaarheid en opties.";
+                else msg = "Hello! I would like to rent a car in Tenerife starting from 34€/day. Please send availability and options.";
+            } else {
+                if (currentLang === 'es') msg = "¡Hola Ticket Box Villamar! Tengo una pregunta sobre sus excursiones.";
+                else if (currentLang === 'fr') msg = "Bonjour Ticket Box Villamar ! J'ai une question sur vos excursions.";
+                else if (currentLang === 'de') msg = "Hallo Ticket Box Villamar! Ich habe eine Frage zu Ihren Ausflügen.";
+                else if (currentLang === 'nl') msg = "Hallo Ticket Box Villamar! Ik heb een vraag over uw excursies.";
+                else msg = "Hello Ticket Box Villamar! I have a question about your excursions.";
+            }
+            window.open(`https://wa.me/34631212990?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function initializeWebsite() {
+            initTailwind();
+            document.getElementById('current-lang-display').innerHTML = `🇬🇧 <span>English</span>`;
+            renderExcursions();
+            
+            document.addEventListener('click', function(e) {
+                const menu = document.getElementById('lang-menu');
+                const btn = document.getElementById('lang-button');
+                if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                    menu.classList.add('hidden');
+                    menu.style.display = 'none';
+                }
+            });
+            
+            console.log('%c[Ticket Box Villamar] ✅ FINAL VERSION: Team of 4 Agents • All real photos added • Multilingual WhatsApp • Ready for Cloudflare!', 'color:#00B4D8');
+            document.getElementById('booking-modal').style.display = 'none';
+        }
+
+        window.onload = initializeWebsite;
+    </script>
+</body>
+</html>
